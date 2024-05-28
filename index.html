@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bom dia, meu bem ♥</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            max-width: 200px;
+            margin: 20px auto;
+        }
+        .grid div {
+            padding: 10px;
+            background: #b2c4f6;
+            border: 1px solid #a5a0a0;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #7368b1;
+        }
+        .hidden {
+            display: none;
+        }
+        .wrong {
+            background-color: white;
+        }
+        .correct {
+            background-color: red;
+        }
+        /* Estilo responsivo para a imagem */
+        #page5 img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="page1">
+        <div class="grid">
+            <div>B</div><div>X</div><div>M</div><div>Y</div><div>O</div><div>D</div><div>A</div>
+            <div>A</div><div>Z</div><div>Y</div><div>R</div><div>D</div><div>I</div><div>K</div>
+            <div>F</div><div>M</div><div>N</div><div>I</div><div>M</div><div>K</div><div>R</div>
+            <div>B</div><div>O</div><div>M</div><div>D</div><div>I</div><div>A</div><div>P</div>
+            <div>N</div><div>I</div><div>J</div><div>D</div><div>O</div><div>D</div><div>I</div>
+        </div>
+        <input type="text" id="input1" placeholder="O que você encontrou?">
+        <button onclick="checkWord()">Ok</button>
+    </div>
+
+    <div id="page2" class="hidden">
+        <h2>Espero que você tenha um dia</h2>
+        <p> clique em uma ordem correta </p>
+        <button id="maravilhoso" onclick="checkOrder('maravilhoso')">Maravilhoso</button>
+        <button id="perfeito" onclick="checkOrder('perfeito')">Perfeito</button>
+        <button id="abençoado" onclick="checkOrder('abençoado')">Abençoado</button>
+        <button id="incrível" onclick="checkOrder('incrível')">Incrível</button>
+        <p id="feedback" class="hidden">Tente de novo</p>
+    </div>
+
+    <div id="page3" class="hidden">
+        <h2>Você me ama?</h2>
+        <button onclick="goToNextPage()">Sim</button>
+        <button id="nao-btn" onclick="transformToYes()">Não</button>
+    </div>
+
+    <div id="page4" class="hidden">
+        <div id="love-message"></div>
+        <button onclick="nextPage()">Próximo</button>
+    </div>
+
+    <div id="page5" class="hidden">
+        <h2>BOM DIA ♥</h2>
+        <img src="IMAGE/index.jpg" alt="Índice">
+        <p>Eu te amo, mas como entre 0 e 1 existem uma infinidade de números, no "eu te amo" existem uma infinidade de "porquês". Eu amo seus olhos. Eu amo seu cabelo. Eu amo seu sorriso. Eu amo o seu pescoço. Eu amo o seu narizinho. Eu amo suas orelhas. Eu amo sua sobrancelha linda. Eu amo seus pés, e o fato dele serem mil vezes mais bonitos que os meus. Eu amo seu o seu corpo, por completo. Eu amo quando você tenta me proteger, seja me colocando para o outro lado da calçada ou evitando me deixar perto de lugares que tenham milho cozido. Eu amo sua personalidade dupla, tripla, quádrupla, onde você consegue ser o mais brincalhão, sério, espontâneo e sem vergonha ao mesmo tempo (eu realmente amo isso). Eu amo quando você é exagerado e tem orgulho de ser assim. Eu amo a sua memória capaz de lembrar dos mais mínimos detalhes da nossa história (quando quer, óbvio). Eu amo todos os seus dramas, apesar de não ter muita paciência para alguns deles. Eu amo que você goste de algo que eu odeio (história e filosofia). Amo o seu jeitinho desastrado, me sinto tão à vontade vendo que nunca mais vou passar vergonha sozinha. Amo a segurança que você me traz, principalmente em lugares que eu não conheço. Eu amo quando você tenta ser menino mau e não consegue, mas amo ainda mais quando você é você. Eu amo o fato de você rir das coisas mais idiotas possíveis, principalmente quando vai contar alguma história engraçada e não consegue terminar porque não para de rir lembrando. Eu amo estar com você. Eu amo o que você me faz sentir por você (paixão e T andam lado a lado). Eu amo como você me faz sentir em relação a mim. Eu amo a paz que sinto de poder ser eu mesma na sua presença. Eu amo o seu cheiro. Eu amo o seu abraço. Eu amo o seu beijo. Eu amo ficar agarradinha com você, seja nós dois sentadinhos juntos ou eu em cima de você. Posso achar mais mil motivos do porquê eu te amo, mas o principal dentre todos eles é que eu vejo Jesus na sua vida. Pois é, eu não teria começado a te amar se não fosse Ele na sua e na minha vida. Eu vejo mais e mais o Espírito Santo em você. Cada dia que passa eu vou amando mais Jesus, e cada vez que vou amando mais Jesus, eu vou te amando mais também. Espero poder descobrir mais infinidades do porquê eu te amo, e espero não perder os que já tenho.
+
+            <br> fique com essa preciosidade ♥</p>
+            <br>
+            <button onclick="openSpotify()">Clique</button>
+        </div>
+
+    <script>
+        let order = [];
+        let correctOrder = ['maravilhoso', 'perfeito', 'abençoado', 'incrível'];
+
+        function checkWord() {
+            const input = document.getElementById('input1').value.toLowerCase();
+            if (input === 'bom dia') {
+                document.getElementById('page1').classList.add('hidden');
+                document.getElementById('page2').classList.remove('hidden');
+            } else {
+                alert('Palavra incorreta, tente novamente.');
+            }
+        }
+
+        function checkOrder(word) {
+            const button = document.getElementById(word);
+            order.push(word);
+            button.classList.add('correct');
+            if (order.length === 4) {
+                if (JSON.stringify(order) === JSON.stringify(correctOrder)) {
+                    document.getElementById('page2').classList.add('hidden');
+                    document.getElementById('page3').classList.remove('hidden');
+                } else {
+                    document.getElementById('feedback').classList.remove('hidden');
+                    resetButtons();
+                    order = [];
+                }
+            }
+        }
+
+        function resetButtons() {
+            document.querySelectorAll('#page2 button').forEach(button => {
+                button.classList.remove('correct');
+                button.classList.add('wrong');
+                setTimeout(() => button.classList.remove('wrong'), 200);
+            });
+        }
+
+        function transformToYes() {
+            const naoBtn = document.getElementById('nao-btn');
+            naoBtn.innerText = 'Sim';
+            naoBtn.setAttribute('onclick', 'goToNextPage()');
+        }
+
+        function goToNextPage() {
+            document.getElementById('page3').classList.add('hidden');
+            showLoveMessage();
+        }
+
+        function showLoveMessage() {
+            let loveMessage = "Que bom, porque eu te amo muito muito muito ";
+            for (let i = 0; i < 100; i++) {
+                loveMessage += "muito ";
+            }
+            document.getElementById('love-message').innerText = loveMessage;
+            document.getElementById('page4').classList.remove('hidden');
+        }
+
+        function nextPage() {
+            document.getElementById('page4').classList.add('hidden');
+            document.getElementById('page5').classList.remove('hidden');
+        }
+    </script>
+    <script>
+        // Função para redirecionar para o Spotify
+        function openSpotify() {
+            window.location.href = "https://open.spotify.com/playlist/5dCDw64NY9YMJ2Wqapw6bo?si=5fd00ed06c7740da";
+        
+        }
+    
+        function checkOrder(word) {
+            const button = document.getElementById(word);
+            order.push(word);
+            button.classList.add('correct');
+            if (order.length === 4) {
+                if (JSON.stringify(order) === JSON.stringify(correctOrder)) {
+                    document.getElementById('page2').classList.add('hidden');
+                    document.getElementById('page3').classList.remove('hidden');
+                } else {
+                    document.getElementById('feedback').classList.remove('hidden');
+                    resetButtons();
+                    order = [];
+                }
+            }
+        }
+    
+        function resetButtons() {
+            document.querySelectorAll('#page2 button').forEach(button => {
+                button.classList.remove('correct');
+                button.classList.add('wrong');
+                setTimeout(() => button.classList.remove('wrong'), 200);
+            });
+        }
+    
+        function transformToYes() {
+            const naoBtn = document.getElementById('nao-btn');
+            naoBtn.innerText = 'Sim';
+            naoBtn.setAttribute('onclick', 'goToNextPage()');
+        }
+    
+        function goToNextPage() {
+            document.getElementById('page3').classList.add('hidden');
+            showLoveMessage();
+        }
+    
+        function showLoveMessage() {
+            let loveMessage = "Que bom, porque eu te amo muito muito muito ";
+            for (let i = 0; i < 100; i++) {
+                loveMessage += "muito ";
+            }
+            document.getElementById('love-message').innerText = loveMessage;
+            document.getElementById('page4').classList.remove('hidden');
+        }
+    
+        function nextPage() {
+            document.getElementById('page4').classList.add('hidden');
+            document.getElementById('page5').classList.remove('hidden');
+        }
+    </script>
+    
+</body>
+</html>
